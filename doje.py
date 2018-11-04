@@ -1,7 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont
-import textwrap, random
+import random
+dab = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] #trivial but works
+a = random.choice(dab)
+path = "images/"
 
-image = Image.open("images/4.jpg")
+image = Image.open(path+str(a)+".jpg")
 image_width = image.size[0]
 image_height = image.size[1]
 shadowcolor = "black"
@@ -11,8 +14,6 @@ size = int(input("Font size? (48 recommended) \n"))
 if size > 64:
     size = 64
 font = ImageFont.truetype("impact.ttf", size)
-
-
 
 def bottom_text(img, font, texttop, textbot, shadowcolor):
     draw = ImageDraw.Draw(img)
@@ -34,6 +35,7 @@ def bottom_text(img, font, texttop, textbot, shadowcolor):
     draw.text((x1 + 1, y1 + 1), textbot, font=font, fill=shadowcolor)
     draw.text((x1, y1), text=textbot, fill="white", font=font)
     return img
+
 
 bottom_text(image, font, texttop, textbot, shadowcolor)
 image.show()
