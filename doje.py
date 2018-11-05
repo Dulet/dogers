@@ -25,14 +25,15 @@ def draw_text_with_shadow(x, y, text, font, shadow_color = "black", text_color =
     draw.text((x, y), text=text, font=font, fill=text_color)
 
 def insert_text(fonttop, fontbot, texttop, textbot, shadow_color = "black"):
-    text_width, text_height = draw.textsize(texttop, fonttop)
-    x1 = (image_width-text_width)/2
-    y1 = 0 + text_height*0.25
-    draw_text_with_shadow(x1, y1, texttop, fonttop, shadow_color)
+    text_width1, text_height1 = draw.textsize(texttop, fonttop)
+    x1 = (image_width - text_width1) / 2
+    y1 = text_height1 * 0.25
 
-    text_width, text_height = draw.textsize(textbot, fontbot)
-    x2 = (image_width - text_width) / 2
-    y2 = image_height - text_height * 1.5
+    text_width2, text_height2 = draw.textsize(textbot, fontbot)
+    x2 = (image_width - text_width2) / 2
+    y2 = image_height - text_height2 * 1.5
+
+    draw_text_with_shadow(x1, y1, texttop, fonttop, shadow_color)
     draw_text_with_shadow(x2, y2, textbot, fontbot, shadow_color)
 
 texttop = input("Top text? \n").upper()
