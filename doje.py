@@ -10,10 +10,10 @@ def get_fonts(fontsize, texttop, textbot, fonttop_name = "impact.ttf", fontbot_n
     fonttop = ImageFont.truetype(fonttop_name, fontsize)
     fontbot = ImageFont.truetype(fontbot_name, fontsize)
     while draw.textsize(texttop, fonttop)[0] >= image_width:
-        fontsize -= 10
+        fontsize -= 5
         fonttop = ImageFont.truetype(fonttop_name, fontsize)
     while draw.textsize(textbot, fontbot)[0] >= image_width:
-        fontsize -= 10
+        fontsize -= 5
         fontbot = ImageFont.truetype(fontbot_name, fontsize)
     return fonttop, fontbot
 
@@ -24,7 +24,7 @@ def draw_text_with_shadow(x, y, text, font, shadow_color = "black", text_color =
     draw.text((x + 1, y + 1), text, font=font, fill=shadow_color)
     draw.text((x, y), text=text, font=font, fill=text_color)
 
-def bottom_text(fonttop, fontbot, texttop, textbot, shadow_color = "black"):
+def insert_text(fonttop, fontbot, texttop, textbot, shadow_color = "black"):
     text_width, text_height = draw.textsize(texttop, fonttop)
     x1 = (image_width-text_width)/2
     y1 = 0 + text_height*0.25
@@ -41,6 +41,6 @@ fontsize = int(input("Font size? (48 recommended) \n"))
 if fontsize > 64:
     fontsize = 64
 fonttop, fontbot = get_fonts(fontsize, texttop, textbot)
-bottom_text(fonttop, fontbot, texttop, textbot)
+insert_text(fonttop, fontbot, texttop, textbot)
 image.show()
 image.save("images/results/" + str(int(time.time())) + ".jpg")
