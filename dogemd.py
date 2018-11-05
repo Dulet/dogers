@@ -1,3 +1,4 @@
+#!/usr/bin/env python 
 from sys import argv
 from dogecore import get_doge
 if len(argv) == 4:
