@@ -210,5 +210,6 @@ pip-selfcheck.json
 # Start of Melol
 
 .vscode
+results/**/*
 
 # End of MELOL

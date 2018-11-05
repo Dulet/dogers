@@ -1,10 +1,13 @@
 from PIL import Image, ImageDraw, ImageFont
 from random import choice
-from os import listdir
+from os import listdir, makedirs
+from os.path import exists
 import time
 image = Image.open("images/" + choice(listdir("images")))
 image_width, image_height = image.size
 draw = ImageDraw.Draw(image)
+if not exists("results"):
+    makedirs("results")
 
 def get_fonts(fontsize, texttop, textbot, fonttop_name = "impact.ttf", fontbot_name = "impact.ttf"):
     fonttop = ImageFont.truetype(fonttop_name, fontsize)
@@ -40,4 +43,4 @@ def get_doge(texttop, textbot, fontsize):
     fonttop, fontbot = get_fonts(fontsize, texttop, textbot)
     insert_text(fonttop, fontbot, texttop, textbot)
     image.show()
-    image.save("images/results/" + str(int(time.time())) + ".jpg")
+    image.save("results/" + str(int(time.time())) + ".jpg")
