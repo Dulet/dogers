@@ -1,10 +1,9 @@
 from PIL import Image, ImageDraw, ImageFont
-import random
-dab = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] #trivial but works
-a = random.choice(dab)
-path = "images/"
+from random import choice
+from os import listdir
+path = "images/" + choice(listdir("images"))
 
-image = Image.open(path+str(a)+".jpg")
+image = Image.open(path)
 image_width = image.size[0]
 image_height = image.size[1]
 shadowcolor = "black"
