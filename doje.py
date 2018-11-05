@@ -1,50 +1,46 @@
 from PIL import Image, ImageDraw, ImageFont
-import random, time
-dab = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] #trivial but works
-a = random.choice(dab)
-path = "images/"
+import time
+from random import choice
+from os import listdir
+image = Image.open("images/" + choice(listdir("images")))
+image_width, image_height = image.size
+draw = ImageDraw.Draw(image)
 
-image = Image.open(path+str(a)+".jpg")
-image_width = image.size[0]
-image_height = image.size[1]
-shadowcolor = "black"
-texttop = input("Top text? \n").upper()
-textbot = input("Bottom text? \n").upper()
-size = int(input("Font size? (48 recommended) \n"))
-if size > 64:
-    size = 64
-fonttop = ImageFont.truetype("impact.ttf", size)
-fontbot = ImageFont.truetype("impact.ttf", size)
+def get_fonts(fontsize, texttop, textbot, fonttop_name = "impact.ttf", fontbot_name = "impact.ttf"):
+    fonttop = ImageFont.truetype(fonttop_name, fontsize)
+    fontbot = ImageFont.truetype(fontbot_name, fontsize)
+    while draw.textsize(texttop, fonttop)[0] >= image_width:
+        fontsize -= 10
+        fonttop = ImageFont.truetype(fonttop_name, fontsize)
+    while draw.textsize(textbot, fontbot)[0] >= image_width:
+        fontsize -= 10
+        fontbot = ImageFont.truetype(fontbot_name, fontsize)
+    return fonttop, fontbot
 
-while ImageDraw.Draw(image).textsize(texttop, fonttop)[0] >= image_width:
-    size -= 10
-    fonttop = ImageFont.truetype("impact.ttf", size)
-while ImageDraw.Draw(image).textsize(textbot, fontbot)[0] >= image_width:
-    size -= 10
-    fontbot = ImageFont.truetype("impact.ttf", size)
+def draw_text_with_shadow(x, y, text, font, shadow_color = "black", text_color = "white"):
+    draw.text((x - 1, y - 1), text, font=font, fill=shadow_color)
+    draw.text((x + 1, y - 1), text, font=font, fill=shadow_color)
+    draw.text((x - 1, y + 1), text, font=font, fill=shadow_color)
+    draw.text((x + 1, y + 1), text, font=font, fill=shadow_color)
+    draw.text((x, y), text=text, font=font, fill=text_color)
 
-def bottom_text(img, fonttop, fontbot, texttop, textbot, shadowcolor):
-    draw = ImageDraw.Draw(img)
+def bottom_text(fonttop, fontbot, texttop, textbot, shadow_color = "black"):
     text_width, text_height = draw.textsize(texttop, fonttop)
-    x = (image_width-text_width)/2
-    y = 0 + text_height*0.25
-    draw.text((x - 1, y - 1), texttop, font=fonttop, fill=shadowcolor)
-    draw.text((x + 1, y - 1), texttop, font=fonttop, fill=shadowcolor)
-    draw.text((x - 1, y + 1), texttop, font=fonttop, fill=shadowcolor)
-    draw.text((x + 1, y + 1), texttop, font=fonttop, fill=shadowcolor)
-    draw.text((x, y), text=texttop, fill="white", font=fonttop)
+    x1 = (image_width-text_width)/2
+    y1 = 0 + text_height*0.25
+    draw_text_with_shadow(x1, y1, texttop, fonttop, shadow_color)
 
     text_width, text_height = draw.textsize(textbot, fontbot)
-    x1 = (image_width - text_width) / 2
-    y1 = image_height - text_height*1.5
-    draw.text((x1 - 1, y1 - 1), textbot, font=fontbot, fill=shadowcolor)
-    draw.text((x1 + 1, y1 - 1), textbot, font=fontbot, fill=shadowcolor)
-    draw.text((x1 - 1, y1 + 1), textbot, font=fontbot, fill=shadowcolor)
-    draw.text((x1 + 1, y1 + 1), textbot, font=fontbot, fill=shadowcolor)
-    draw.text((x1, y1), text=textbot, fill="white", font=fontbot)
-    return img
+    x2 = (image_width - text_width) / 2
+    y2 = image_height - text_height * 1.5
+    draw_text_with_shadow(x2, y2, textbot, fontbot, shadow_color)
 
-
-bottom_text(image, fonttop, fontbot, texttop, textbot, shadowcolor)
+texttop = input("Top text? \n").upper()
+textbot = input("Bottom text? \n").upper()
+fontsize = int(input("Font size? (48 recommended) \n"))
+if fontsize > 64:
+    fontsize = 64
+fonttop, fontbot = get_fonts(fontsize, texttop, textbot)
+bottom_text(fonttop, fontbot, texttop, textbot)
 image.show()
 image.save("images/results/" + str(int(time.time())) + ".jpg")
