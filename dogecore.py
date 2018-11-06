@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 from random import choice
 from os import listdir, makedirs
 from os.path import exists, dirname, join
-from  textwrap import wrap
+from textwrap import wrap
 import time
 cwd_path = dirname(__file__)
 images_path = join(cwd_path, "images")
