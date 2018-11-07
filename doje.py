@@ -6,4 +6,4 @@ fontsize = int(input("Font size? (48 recommended) \n"))
 if fontsize > 64:
     fontsize = 64
 
-get_doge(texttop, textbot, fontsize)
+get_doge(texttop, textbot, fontsize, fontsize)
