@@ -97,9 +97,9 @@ def insert_text(fonttop, fontbot, texttop, textbot, fontsize, shadow_color = "bl
     draw_text(x1, y1, toplines, fonttop)
     draw_text(x2, y2, botlines, fontbot)
 
-def get_doge(texttop, textbot, fontsize):
-    fonttop = ImageFont.truetype("impact.ttf", fontsize)
-    fontbot = ImageFont.truetype("impact.ttf", fontsize)
-    insert_text(fonttop, fontbot, texttop, textbot, fontsize)
+def get_doge(texttop, textbot, fontsizetop, fontsizebot):
+    fonttop = ImageFont.truetype("impact.ttf", fontsizetop)
+    fontbot = ImageFont.truetype("impact.ttf", fontsizebot)
+    insert_text(fonttop, fontbot, texttop, textbot, fontsizetop)
     image.show()
     image.save(join(results_path, str(int(time.time())) + ".jpg"))
